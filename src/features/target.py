@@ -39,11 +39,13 @@ class TargetEngineer:
         future_price = df['Close'].shift(-self.horizon)
         forward_return = (future_price - df['Close']) / df['Close']
         
-        # Binary target
-        df['target'] = (forward_return > self.threshold).astype(int)
-        
-        # Also store the actual return for analysis
+        # Store the actual return for analysis
         df['forward_return'] = forward_return
+        
+        # Binary target (keep NaN where forward_return is NaN)
+        df['target'] = pd.NA
+        df.loc[forward_return > self.threshold, 'target'] = 1
+        df.loc[forward_return <= self.threshold, 'target'] = 0
         
         return df
     
