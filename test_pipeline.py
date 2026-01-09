@@ -41,8 +41,8 @@ def load_and_prepare_data(tickers: list, data_dir: str = "data") -> pd.DataFrame
         df_features.rename(columns={'index': 'date'}, inplace=True)
         df_features['ticker'] = ticker
         
-        # Apply target engineering
-        te = TargetEngineer(horizon=5)
+        # Apply target engineering - TEST B: 1% threshold only
+        te = TargetEngineer(horizon=5, threshold=0.01)
         df_final = te.add_target_to_features(df_features)
         
         all_data.append(df_final)
@@ -99,9 +99,9 @@ def main():
     print("\n[4/4] Running walk-forward backtest...")
     config = BacktestConfig(
         initial_capital=100000,
-        min_probability=0.52,  # Lower threshold for testing
-        n_folds=3,  # Fewer folds for faster testing
-        min_training_days=200,  # Slightly less for 5-year data
+        min_probability=0.52,  # Back to baseline
+        n_folds=3,
+        min_training_days=200,
     )
     
     backtester = WalkForwardBacktester(config)

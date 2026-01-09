@@ -15,14 +15,23 @@ class TargetEngineer:
         """
         Args:
             horizon: Number of days forward to predict (default 5)
-            threshold: Minimum return to be considered positive (default 0.0)
+            threshold: Minimum absolute return to be included (default 0.0)
+                       If > 0, creates a "dead zone" where small moves are excluded
+                       e.g. threshold=0.01 means only moves > +1% or < -1% are used
         """
         self.horizon = horizon
         self.threshold = threshold
     
     def create_target(self, df: pd.DataFrame) -> pd.DataFrame:
         """
-        Create binary target: 1 if forward return > threshold, else 0.
+        Create binary target with optional dead zone for small moves.
+        
+        If threshold = 0: 
+            target = 1 if return > 0, else 0
+        If threshold > 0:
+            target = 1 if return > +threshold
+            target = 0 if return < -threshold
+            target = NaN if |return| <= threshold (excluded from training)
         
         Args:
             df: DataFrame with Close prices
@@ -42,10 +51,18 @@ class TargetEngineer:
         # Store the actual return for analysis
         df['forward_return'] = forward_return
         
-        # Binary target (keep NaN where forward_return is NaN)
+        # Binary target with dead zone
         df['target'] = pd.NA
-        df.loc[forward_return > self.threshold, 'target'] = 1
-        df.loc[forward_return <= self.threshold, 'target'] = 0
+        
+        if self.threshold > 0:
+            # Only classify meaningful moves, exclude small moves
+            df.loc[forward_return > self.threshold, 'target'] = 1
+            df.loc[forward_return < -self.threshold, 'target'] = 0
+            # Moves between -threshold and +threshold remain NaN (excluded)
+        else:
+            # Original behavior: any positive = 1, any negative/zero = 0
+            df.loc[forward_return > 0, 'target'] = 1
+            df.loc[forward_return <= 0, 'target'] = 0
         
         return df
     
