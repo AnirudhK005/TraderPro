@@ -1,0 +1,126 @@
+# S&P500 Ticker Universe
+# Organized by sector for clarity
+
+tickers:
+  # Technology
+  - AAPL
+  - MSFT
+  - GOOGL
+  - NVDA
+  - META
+  - AMZN
+  - CRM
+  - ORCL
+  - IBM
+  - INTC
+  - CSCO
+  - QCOM
+  - TXN
+  - ADP
+  - NOW
+  
+  # Financials
+  - JPM
+  - BAC
+  - WFC
+  - GS
+  - MS
+  - BLK
+  - C
+  - AXP
+  - USB
+  - PNC
+  - SCHW
+  - BK
+  - MMC
+  
+  # Healthcare
+  - JNJ
+  - PFE
+  - UNH
+  - ABBV
+  - MRK
+  - TMO
+  - DHR
+  - ABT
+  - LLY
+  - BMY
+  - AMGN
+  - GILD
+  - CVS
+  - MDT
+  
+  # Consumer
+  - HD
+  - MCD
+  - SBUX
+  - NKE
+  - LOW
+  - TGT
+  - COST
+  - WMT
+  - PG
+  - KO
+  - PEP
+  - CL
+  - DG
+  
+  # Industrials
+  - CAT
+  - DE
+  - HON
+  - GE
+  - BA
+  - UPS
+  - RTX
+  - LMT
+  - GD
+  - EMR
+  
+  # Energy
+  - XOM
+  - CVX
+  - COP
+  - EOG
+  - SLB
+  - MPC
+  - PSX
+  
+  # Utilities & Real Estate
+  - DUK
+  - SO
+  - NEE
+  - AEP
+  - EXC
+  - SRE
+  - ES
+  - AMT
+  - CCI
+  - EQIX
+  
+  # Communication
+  - DIS
+  - CMCSA
+  - NFLX
+  - T
+  - VZ
+  
+  # Materials
+  - LIN
+  - APD
+  - ECL
+  - DOW
+  - FCX
+  
+  # ETFs
+  - SPY
+  - QQQ
+  - XLK
+  - XLF
+  - XLV
+  - XLE
+  - XLI
+
+# Data settings
+period: "5y"
+
