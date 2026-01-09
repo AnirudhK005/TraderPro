@@ -2,6 +2,10 @@
 Test the full TraderPro pipeline:
 Data Collection → Feature Engineering → Target Engineering → Backtest
 """
+# Suppress warnings BEFORE any imports
+import warnings
+warnings.filterwarnings('ignore')
+
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -15,8 +19,11 @@ from src.backtest.walkforward import WalkForwardBacktester, BacktestConfig
 def load_and_prepare_data(tickers: list, data_dir: str = "data") -> pd.DataFrame:
     """Load data for multiple tickers and combine into a single DataFrame."""
     all_data = []
+    total = len(tickers)
     
-    for ticker in tickers:
+    for i, ticker in enumerate(tickers):
+        if (i + 1) % 10 == 0:
+            print(f"  Processing {i+1}/{total}...", flush=True)
         filepath = Path(data_dir) / f"{ticker}.csv"
         if not filepath.exists():
             print(f"  Skipping {ticker} - no data file")
@@ -57,16 +64,18 @@ def main():
     
     # Step 1: Check if we have data, if not collect it
     data_dir = Path("data")
-    test_tickers = ["AAPL", "MSFT", "GOOGL", "JPM", "JNJ"]
     
     existing_files = list(data_dir.glob("*.csv"))
     if len(existing_files) < 5:
         print("\n[1/4] Collecting data...")
         collector = DataCollector()
-        collector.tickers = test_tickers
         collector.collect(period="5y")
     else:
         print(f"\n[1/4] Using existing data ({len(existing_files)} files)")
+    
+    # Use all available tickers
+    test_tickers = [f.stem for f in existing_files]
+    print(f"    Tickers to process: {len(test_tickers)}")
     
     # Step 2: Load and prepare data
     print("\n[2/4] Processing data (features + targets)...")

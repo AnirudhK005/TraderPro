@@ -230,8 +230,12 @@ class WalkForwardBacktester:
         """Run backtest on a single fold."""
         
         dates = sorted(val_df['date'].unique())
+        total_days = len(dates)
         
-        for date in dates:
+        for day_idx, date in enumerate(dates):
+            # Progress every 50 days
+            if (day_idx + 1) % 50 == 0:
+                print(f"  Day {day_idx + 1}/{total_days}...", flush=True)
             day_data = val_df[val_df['date'] == date]
             
             # Update portfolio value
