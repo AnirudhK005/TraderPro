@@ -2,6 +2,10 @@
 Walk-forward backtester with integrated training.
 Trains model within each fold to prevent look-ahead bias.
 """
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=UserWarning)
+
 import pandas as pd
 import numpy as np
 from dataclasses import dataclass
