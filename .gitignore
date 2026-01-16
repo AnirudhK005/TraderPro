@@ -47,7 +47,11 @@ results/
 .env
 .env.local
 
+# API credentials (never commit!)
+configs/alpaca_config.yaml
+
 # OS
 .DS_Store
 Thumbs.db
+
 

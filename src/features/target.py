@@ -79,8 +79,11 @@ class TargetEngineer:
         """
         df = self.create_target(df)
         
-        # Drop rows where target is NaN (last 'horizon' rows)
+        # Drop rows where target is NaN (last 'horizon' rows or dead zone)
         df = df.dropna(subset=['target'])
+        
+        # Convert target to int (required for classifier)
+        df['target'] = df['target'].astype(int)
         
         return df
     

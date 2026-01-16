@@ -1,0 +1,14 @@
+# Alpaca API Configuration
+# Get your keys from: https://app.alpaca.markets/paper/dashboard/overview
+# Copy this file to alpaca_config.yaml and fill in your keys
+
+# Paper Trading (use these first!)
+api_key: "your_paper_api_key_here"
+secret_key: "your_paper_secret_key_here"
+base_url: "https://paper-api.alpaca.markets"
+
+# Trading Settings
+max_positions: 10
+position_size_pct: 0.10  # 10% of portfolio per position
+min_probability: 0.52    # Minimum prediction probability to trade
+
